@@ -13,16 +13,24 @@
 
         function App () {
             const [index, setIndex] = React.useState("0");
+            const [result, setResult] = React.useState();
+            const [input, setInput] = React.useState();
 
             const choice = (event) => {
                 setIndex(event.target.value);
-                console.log(index);
+                console.log("index", index);
             }
-        
-            const MtoS = (event) => {
+            
+            const setInputValue = (event) => {
+                setInput(event.target.value);
             }
 
-            const MtoK = (event) => {
+            const MtoS = () => {
+                setResult(input*60 + " seconds");
+            }
+
+            const MtoK = () => {
+                setResult(input/1000 + " km");
             }
             
             return (
@@ -36,15 +44,27 @@
                     </select>
                     <br/>
                     {index === "0" ? "Select Converter" : null}
-                    {index === "1" ? "Minutes to Seconds": null}
+                    {index === "1" ? "Minutes to Seconds" : null}
                     {index === "2" ? "Meters to Killometers" : null}
                     <br/>
+                    <input
+                        id="input"
+                        onChange={setInputValue}>
+                    </input>
                     <button
                         value={index}
                         id="selectBtn"
-                        onClick={choice}
+                        onClick={
+                            index === "1" ?
+                            MtoS
+                            : index === "2" ?
+                            MtoK
+                            : null
+                        }
                         >Convert
                     </button>
+                    <br/>
+                    <h4>{result}</h4>
                     
                 </div>
                 </>
